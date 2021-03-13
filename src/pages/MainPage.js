@@ -22,8 +22,12 @@ function App() {
   return (
     <AppBar position =" fixed">
       <Container fixed>
-        <Toolbar>          
-          <Typography variant="h6" className={classes.title}>ноды-ноды</Typography>
+        <Toolbar>
+          <IconButton edge= "start"
+          color ="inherit" aria-label="menu" className={classes.menuButton}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>sdsd</Typography>
           <Box mr={3}>
             <Button  color ="inherit" variant="ouylined">Log in</Button>
           </Box>
@@ -34,4 +38,4 @@ function App() {
   );
 }
 
-export default App;       
+export default App;
