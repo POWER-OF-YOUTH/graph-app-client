@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function PermanentDrawerRight() {
+export default function MainPage() {
   const classes = useStyles();
 
   return (
