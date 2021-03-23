@@ -1,41 +1,65 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import { AppBar, Container, IconButton, Toolbar, Box, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import {makeStyles} from '@material-ui/core/styles';
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    display: 'flex',
   },
-  menuButton: {
-    marginRight: theme.spacing(1)
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginRight: drawerWidth,
   },
-  title: {
-    flexGrow:1
-  }
-}))
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },  
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3),
+  },
+}));
 
-function App() {
+
+
+export default function PermanentDrawerRight() {
   const classes = useStyles();
 
   return (
-    <AppBar position =" fixed">
-      <Container fixed>
-        <Toolbar>
-          <IconButton edge= "start"
-          color ="inherit" aria-label="menu" className={classes.menuButton}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>sdsd</Typography>
-          <Box mr={3}>
-            <Button  color ="inherit" variant="ouylined">Log in</Button>
-          </Box>
-          <Button color="secondary" variant="contained">Sing Up</Button>
-        </Toolbar>
-      </Container>
-    </AppBar>
+      
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        
+      </AppBar>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+      </main>
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        anchor="right"
+      >        
+        
+          <Button  color ="inherit" variant="ouylined">Зарегистроваться</Button>
+          
+          <Button color="secondary" variant="contained">Войти</Button>
+          
+        
+      </Drawer>
+    </div>
   );
 }
-
-export default App;

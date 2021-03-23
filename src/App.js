@@ -1,37 +1,17 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { AppBar, Container, IconButton, Toolbar, Box, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import {makeStyles} from '@material-ui/core/styles';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginRight: theme.spacing(1)
-  },
-  title: {
-    flexGrow:1
-  }
-}))
+import MainPage from './pages/MainPage';
 
 function App() {
-  const classes = useStyles();
+  return (  
+    <Router>
+      <Switch>
+            <Route exact path="/" component={MainPage} />     
 
-  return (
-    <AppBar position =" fixed">
-      <Container fixed>
-        <Toolbar>          
-          <Typography variant="h6" className={classes.title}>ноды-ноды</Typography>
-          <Box mr={3}>
-            <Button  color ="inherit" variant="ouylined">Log in</Button>
-          </Box>
-          <Button color="secondary" variant="contained">Sing Up</Button>
-        </Toolbar>
-      </Container>
-    </AppBar>
+      </Switch>            
+    </Router>         
   );
 }
 
-export default App;       
+export default App;
