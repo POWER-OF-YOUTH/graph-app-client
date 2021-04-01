@@ -48,7 +48,8 @@ function a11yProps(index) {
 
 
 const drawerWidth = 320;
-const drawerHeight = 365;
+const drawerHeight = 400;
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,16 +86,21 @@ export default function MainPage() {
     setValue(newValue);
   };
 
+
   return (
     
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-         
-        </AppBar>
-        <Typography paragraph>
-          Редактируй графы в реальном времени один (или вместе с друзьями, уже возможно )
+         <Typography variant="h6" noWrap>
+            Graph App
         </Typography>
+      </AppBar>
+        <Toolbar/>
+          <Typography paragraph >
+           <Box m={12} />
+          Редактируй графы в реальном времени один (или вместе с друзьями, уже возможно )
+          </Typography>
       <TabPanel value={value} index={0}>
       <Drawer
         className={classes.drawer}
@@ -104,7 +110,7 @@ export default function MainPage() {
         }}
         anchor="right"
       >        
-        
+        <Box m={2} />
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Вход" {...a11yProps(0)} />
           <Tab label="Регистрация" {...a11yProps(1)} />
@@ -141,7 +147,7 @@ export default function MainPage() {
         }}
         anchor="right"
       >        
-        
+        <Box m={2} />
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Вход" {...a11yProps(0)} />
           <Tab label="Регистрация" {...a11yProps(1)} />
