@@ -7,6 +7,7 @@ function TabPanel(props) {
 
     return (
     <div
+        className={props.className}
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
@@ -14,7 +15,7 @@ function TabPanel(props) {
         {...other}
     >
         {value === index && (
-        <Box p={3}>
+        <Box p={3} style={{padding: "0px"}}>
             <Typography>{children}</Typography>
         </Box>
         )}

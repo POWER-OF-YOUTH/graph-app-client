@@ -6,24 +6,33 @@ import { AppBar, Typography } from '@material-ui/core/';
 import RegisterLoginForm from '../components/RegisterLoginForm';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        paddingTop: "50px"
+    root: { 
+        paddingTop: "40px"
     },
     appBar: {
-        height: "50px"
-    },
-    content: {
-        padding: theme.spacing(3),
+        height: "40px"
     },
     logo: {
         textDecoration: "none",
-        fontFamily: "Montserrat, serif",
-        fontSize: "15pt",
+        fontFamily: "Montserrat, sans-serif",
+        fontSize: "18px",
         fontWeight: "bold",
         color: "white",
         marginTop: "auto",
         marginBottom: "auto",
         marginLeft: "20px"
+    },
+    content: {
+        display: "grid",
+        gridTemplateColumns: "150px 1fr 350px 150px",
+        gridTemplateAreas: "'a b c d'",
+        justifyContent: "center",
+        alignContent: "center",
+        height: "100vh"
+    },
+    form: {
+        gridArea: "c",
+        margin: "0 auto"
     }
 }));
 
@@ -37,8 +46,8 @@ function MainPage() {
                     <a href="/" className={classes.logo}>Graph App</a>
                 </AppBar>  
             </header> 
-            <main>
-                <RegisterLoginForm />
+            <main className={classes.content}>
+                <RegisterLoginForm className={classes.form} />
             </main>
         </div>
     );
