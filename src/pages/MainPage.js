@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         display: "grid",
-        gridTemplateColumns: "150px 1fr 350px 150px",
+        gridTemplateColumns: "150px 2fr 1fr 150px", // 150px 1fr 350px 150px
         gridTemplateAreas: "'a b c d'",
         justifyContent: "center",
         alignContent: "center",

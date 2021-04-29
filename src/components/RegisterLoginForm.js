@@ -19,24 +19,6 @@ const ActionTabs = withStyles({
     },
 })(Tabs);
 
-const StyledTextField = withStyles({
-    root: {
-        width: "100%",
-        marginBottom: "15px",
-        '& .MuiInputBase-root': {
-        },
-        '& .MuiFormLabel-root': {
-            color: "#919BA6"
-        },
-        '& .MuiFormLabel-root.Mui-focused': {
-            color: "white"
-        },
-        '& .MuiInputBase-input': {
-            color: "white"
-        }
-      }
-})(TextField);
-
 const useStyles = makeStyles((theme) => ({
     container: {
         width: "290px", // 290px
@@ -68,8 +50,17 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: "15px"
     },
     field: {
-        
-        
+        width: "100%",
+        marginBottom: "15px",
+        '& .MuiFormLabel-root': {
+            color: "#919BA6"
+        },
+        '& .MuiFormLabel-root.Mui-focused': {
+            color: "white"
+        },
+        '& .MuiInputBase-input': {
+            color: "white"
+        }
     },
 }));
 
@@ -94,18 +85,18 @@ function RegisterLoginForm(props) {
                     <Tab label="Вход" />
                 </ActionTabs>
                 <TabPanel value={value} index={0} className={classes.panel}>
-                    <StyledTextField className={classes.field} variant="filled" type="text" label="Email" required />
-                    <StyledTextField className={classes.field} variant="filled" type="text" label="Логин" required />
-                    <StyledTextField className={classes.field} variant="filled" type="text" label="Фамилия" required />
-                    <StyledTextField className={classes.field} variant="filled" type="text" label="Имя" required />
-                    <StyledTextField className={classes.field} variant="filled" type="text" label="Отчество" required />
-                    <StyledTextField className={classes.field} variant="filled" type="password" label="Пароль" required />
-                    <StyledTextField className={classes.field} variant="filled" type="password" label="Повтор пороля" required />
+                    <TextField className={classes.field} variant="filled" type="text" label="Email" required />
+                    <TextField className={classes.field} variant="filled" type="text" label="Логин" required />
+                    <TextField className={classes.field} variant="filled" type="text" label="Фамилия" required />
+                    <TextField className={classes.field} variant="filled" type="text" label="Имя" required />
+                    <TextField className={classes.field} variant="filled" type="text" label="Отчество" required />
+                    <TextField className={classes.field} variant="filled" type="password" label="Пароль" required />
+                    <TextField className={classes.field} variant="filled" type="password" label="Повтор пороля" required />
                     <Button>Зарегистрироваться</Button>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <StyledTextField className={classes.field} variant="filled" type="text" label="Логин" required />
-                    <StyledTextField className={classes.field} variant="filled" type="password" label="Пароль" required />
+                    <TextField className={classes.field} variant="filled" type="text" label="Логин" required />
+                    <TextField className={classes.field} variant="filled" type="password" label="Пароль" required />
                     <Button>Войти</Button>
                 </TabPanel>
             </div>
