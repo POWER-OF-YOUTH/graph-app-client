@@ -70,7 +70,7 @@ function MainPage() {
                 <div className={classes.demo}>
                     <img className={classes.screenshot} src="https://mobiltelefon.ru/photo/february21/05/nothing_naznachila_anons_na_sleduuschuu_nedelu_i_otozvala_ego_picture2_0.jpg" />
                     <p className={classes.screenshotCaption}>
-                        Graph App — интерактивный редактор графов, предназначенный для визуализации больших объёмов данных и исследования различных предметных областей.
+                        <b>Graph App</b> — интерактивный редактор графов, предназначенный для визуализации больших объёмов данных и исследования различных предметных областей.
                     </p>
                 </div>
                 <RegisterLoginForm className={classes.form} />
