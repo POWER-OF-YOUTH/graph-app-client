@@ -6,28 +6,16 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
 
 import TabPanel from "./TabPanel";
 
-const ActionTabs = withStyles({
-    root: {
-        color: "white"
-    },
-    indicator: {
-        backgroundColor: "white"
-    },
-})(Tabs);
-
 const useStyles = makeStyles((theme) => ({
     container: {
-        width: "290px", // 290px
         display: "flex",
+        minWidth: "290px",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
         backgroundColor: "#395273",
-        padding: "15px",
         borderRadius: "13px"
     },
     logo: {
@@ -42,26 +30,92 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         fontSize: "42px"
     },
+    actionTabs: {
+        color: "white",
+        width: "100%",
+        '& .MuiTabs-indicator': {
+            backgroundColor: "white"
+        }
+    },
     logoCaption: {
         margin: "0",
         fontSize: "15px"
     },
-    panel: {
-        paddingTop: "15px"
+    panelRegister: {
+        boxSizing: "border-box",
+        padding: "15px",
+        width: "100%"
+    },
+    registerFields: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr 1fr",
+        gap: "15px",
+        '& :nth-child(n)': {
+            gridColumn: "span 3"
+        },
+        '& :nth-child(3)': {
+            gridColumn: "span 1"
+        },
+        '& :nth-child(4)': {
+            gridColumn: "span 1"
+        },
+        '& :nth-child(5)': {
+            gridColumn: "span 1"
+        }
+    },
+    panelLogin: {
+        boxSizing: "border-box",
+        padding: "15px",
+        width: "100%"
+    },
+    loginFields: {
+        display: "grid",
+        gridTemplateColumns: "1fr",
+        gap: "15px"
     },
     field: {
         width: "100%",
-        marginBottom: "15px",
         '& .MuiFormLabel-root': {
             color: "#919BA6"
         },
         '& .MuiFormLabel-root.Mui-focused': {
             color: "white"
         },
+        '& .MuiFilledInput-underline:after': {
+            borderBottomColor: "white"
+        },
         '& .MuiInputBase-input': {
             color: "white"
         }
     },
+    registerButton: {
+        margin: "0",
+        marginTop: "20px",
+        width: "100%",
+        backgroundColor: "#00FF00",
+        color: "white",
+        '&:hover': {
+            backgroundColor: "white",
+            color: "black"
+        },
+        '& .MuiButtonBase-root': {
+            backgroundColor: "white"
+        }
+    },
+    loginButton: {
+        margin: "0",
+        marginTop: "20px",
+        width: "100%",
+        backgroundColor: "#1463FF",
+        color: "white",
+        '&:hover': {
+            backgroundColor: "white",
+            color: "black"
+        },
+        '& .MuiButtonBase-root': {
+            backgroundColor: "white"
+        }
+    }
 }));
 
 function RegisterLoginForm(props) {
@@ -80,24 +134,28 @@ function RegisterLoginForm(props) {
                     <p className={classes.logoName}>Graph App</p>
                     <p className={classes.logoCaption}>Редактирование графов в реальном времени</p>
                 </div>
-                <ActionTabs value={value} onChange={handleChange} className={classes.actionTabs} fixed>
+                <Tabs value={value} onChange={handleChange} className={classes.actionTabs} variant="fullWidth" fixed>
                     <Tab label="Регистрация" />
                     <Tab label="Вход" />
-                </ActionTabs>
-                <TabPanel value={value} index={0} className={classes.panel}>
-                    <TextField className={classes.field} variant="filled" type="text" label="Email" required />
-                    <TextField className={classes.field} variant="filled" type="text" label="Логин" required />
-                    <TextField className={classes.field} variant="filled" type="text" label="Фамилия" required />
-                    <TextField className={classes.field} variant="filled" type="text" label="Имя" required />
-                    <TextField className={classes.field} variant="filled" type="text" label="Отчество" required />
-                    <TextField className={classes.field} variant="filled" type="password" label="Пароль" required />
-                    <TextField className={classes.field} variant="filled" type="password" label="Повтор пороля" required />
-                    <Button>Зарегистрироваться</Button>
+                </Tabs>
+                <TabPanel value={value} index={0} className={classes.panelRegister}>
+                    <div className={classes.registerFields}>
+                        <TextField className={classes.field} variant="filled" type="text" label="Email" required />
+                        <TextField className={classes.field} variant="filled" type="text" label="Логин" required />
+                        <TextField className={classes.field} variant="filled" type="text" label="Фамилия" required />
+                        <TextField className={classes.field} variant="filled" type="text" label="Имя" required />
+                        <TextField className={classes.field} variant="filled" type="text" label="Отчество" required />
+                        <TextField className={classes.field} variant="filled" type="password" label="Пароль" required />
+                        <TextField className={classes.field} variant="filled" type="password" label="Повтор пороля" required />
+                    </div>
+                    <Button className={classes.registerButton}>Зарегистрироваться</Button>
                 </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <TextField className={classes.field} variant="filled" type="text" label="Логин" required />
-                    <TextField className={classes.field} variant="filled" type="password" label="Пароль" required />
-                    <Button>Войти</Button>
+                <TabPanel value={value} index={1} className={classes.panelLogin}>
+                    <div className={classes.loginFields}>
+                        <TextField className={classes.field} variant="filled" type="text" label="Логин" required />
+                        <TextField className={classes.field} variant="filled" type="password" label="Пароль" required />
+                    </div>
+                    <Button className={classes.loginButton}>Войти</Button>
                 </TabPanel>
             </div>
         </div>
