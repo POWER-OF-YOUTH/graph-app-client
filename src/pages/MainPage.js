@@ -7,7 +7,6 @@ import RegisterLoginForm from '../components/RegisterLoginForm';
 
 const useStyles = makeStyles((theme) => ({
     root: { 
-        paddingTop: "40px",
         backgroundImage: "url(https://psv4.userapi.com/c520036/u76983384/docs/d12/1a3651a8e1df/41589-2-graphic-elements-png-image-high-quality.png?extra=t_YROjFz7F1F5vELCnEdd5mBl3zhF59BfBUufV3B62HT4Te8FMe-Wv36S3TXVeqo5I4EGp3t_bCjhaYCSHL5Rotk5aZKQw2lJdwYq3cNE5XVuS0icbC5ySNwmOhPgBi0rHXQ9eZ7c9IxEEcRHAO8Xw)",
         backgroundSize: "cover"
     },
