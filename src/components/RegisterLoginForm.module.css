@@ -27,6 +27,11 @@
     width: 100%;
 }
 
+.actionTabs:global(.MuiTabs-root) {
+    color: white;
+    width: 100%;
+}
+
 .actionTabs :global(.MuiTabs-indicator) {
     background-color: white;
 }
