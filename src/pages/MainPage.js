@@ -25,18 +25,18 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         display: "grid",
-        gridTemplateColumns: "100px 2fr 1fr 100px", // 150px 1fr 350px 150px
-        gridTemplateAreas: "'a b c d'",
+        gridTemplateColumns: "1fr 1fr", // 100px 2fr 1fr 100px // 150px 1fr 350px 150px
+        gridTemplateAreas: "'a b'",
         justifyContent: "center",
         alignContent: "center",
         height: "100vh"
     },
     form: {
-        gridArea: "c",
+        gridArea: "b",
         margin: "0 auto"
     },
     demo: {
-        gridArea: "b",
+        gridArea: "a",
         alignSelf: "center",
         margin: "0 auto"
     },
