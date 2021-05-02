@@ -81,7 +81,7 @@
     gap: 15px;
 }
 
-.field {
+.field:global(.MuiTextField-root) {
     width: 100%;
 }
 
@@ -101,24 +101,19 @@
     color: white;
 }
 
-.registerButton {
-    margin: 0;
-    margin-top: 20px;
+.registerButton:global(.MuiButton-root) {
     width: 100%;
+    margin-top: 20px;
     background-color: #00FF00;
     color: white;
 }
 
-.registerButton:hover {
+.registerButton:global(.MuiButton-root):hover {
     background-color: white;
     color: black;
 }
 
-.registerButton :global(.MuiButtonBase-root) {
-    background-color: white;
-}
-
-.loginButton {
+.loginButton:global(.MuiButton-root) {
     margin: 0;
     margin-top: 20px;
     width: 100%;
@@ -126,11 +121,7 @@
     color: white;
 }
 
-.loginButton:hover {
+.loginButton:global(.MuiButton-root):hover {
     background-color: white;
     color: black;
-}
-
-.loginButton :global(.MuiButtonBase-root) {
-    background-color: white;
 }
