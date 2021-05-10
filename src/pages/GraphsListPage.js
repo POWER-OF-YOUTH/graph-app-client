@@ -10,6 +10,7 @@ function GraphsListPage() {
     return (
         <>
             <GraphsListElement del share edit/>
+            <GraphsListElement />
         </>
     );
 }

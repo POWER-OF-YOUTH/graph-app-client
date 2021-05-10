@@ -2,7 +2,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ShareIcon from '@material-ui/icons/Share';
 
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 
 import PropTypes from 'prop-types';
 
@@ -10,37 +10,43 @@ import styles from './GraphsListElement.module.css';
 
 function DeleteButton({ onClick }) {
     return (
-        <Button className={styles.deleteButton} onClick={onClick}>
+        <IconButton size="small" className={styles.deleteButton} onClick={onClick}>
             <DeleteIcon className={styles.deleteIcon} />
-        </Button>
+        </IconButton>
     );
 }
 
 function EditButton({ onClick }) {
     return (
-        <Button className={styles.editButton} onClick={onClick}>
+        <IconButton size="small" className={styles.editButton} onClick={onClick}>
             <SettingsIcon className={styles.editIcon}/>
-        </Button>
+        </IconButton>
     );
 }
 
 function ShareButton({ onClick }) {
     return (
-        <Button className={styles.shareButton} onClick={onClick}>
+        <IconButton size="small" className={styles.shareButton} onClick={onClick}>
             <ShareIcon className={styles.shareIcon}/>
-        </Button>
+        </IconButton>
     );
 }
 
 function GraphsListElement({ name, id, del, edit, share, onDeleteClick, onEditClick, onShareClick }) {
     return (
         <>
-            <div className={styles.element}>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Square_1.svg/1200px-Square_1.svg.png" className={styles.screenshot} />
-                <p className={styles.graphName}>Hello</p>
-                { del ? <DeleteButton onClick={() => onDeleteClick(id)} /> : <></> }
-                { edit ? <EditButton onClick={() => onEditClick(id)} />  : <></> }
-                { share ? <ShareButton onClick={() => onShareClick(id)} /> : <></> }
+            <div className={styles.card}>
+                <div class={styles.screenshotContainer}>
+                    <a href="/">
+                        image here
+                    </a>
+                </div>
+                <p className={styles.name}>Graph Name</p>
+                <div class={styles.buttons}>
+                    { del ? <DeleteButton onClick={() => onDeleteClick(id)} /> : <></> }
+                    { edit ? <EditButton onClick={() => onEditClick(id)} />  : <></> }
+                    { share ? <ShareButton onClick={() => onShareClick(id)} /> : <></> }
+                </div>
             </div>
         </>
     );
