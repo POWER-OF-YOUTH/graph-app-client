@@ -41,7 +41,7 @@ function RegisterLoginForm({ className, onLogin, onRegister }) {
         <div className={className}>
             <div className={styles.container}>
                 <Logo />
-                <Tabs value={value} onChange={handleChange} className={styles.actionTabs} variant="fullWidth" fixed>
+                <Tabs className={styles.actionTabs} value={value} onChange={handleChange} variant="fullWidth" fixed>
                     <Tab label="Регистрация" />
                     <Tab label="Вход" />
                 </Tabs>

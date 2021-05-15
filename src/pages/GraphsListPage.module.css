@@ -1,0 +1,54 @@
+.appBar {
+    height: 40px;
+}
+
+.barLogo {
+    text-decoration: none;
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 20px;
+}
+
+.content {
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+}
+
+.menuTabs {
+    height: calc(100vh - 40px);
+    border-right: 2px solid rgb(44, 44, 44);
+}
+
+.menuTabs :global(.MuiTabs-indicator) {
+    display: none;
+}
+
+.menuTabs :global(.MuiTab-wrapper) {
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+}
+
+.menuTabs :global(.MuiSvgIcon-root) {
+    margin-right: 10px;
+}
+
+.menuTabs :global(.MuiTab-root.Mui-selected) {
+    background-color: #dddddd; /* #c7e4f0 */
+}
+
+.graphsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 150px));
+    grid-template-rows: repeat(auto-fit, minmax(148px, 163px));
+    padding: 20px;
+    gap: 20px;
+}

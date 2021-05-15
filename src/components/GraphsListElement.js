@@ -36,12 +36,10 @@ function GraphsListElement({ name, id, del, edit, share, onDeleteClick, onEditCl
     return (
         <>
             <div className={styles.card}>
-                <div class={styles.screenshotContainer}>
-                    <a href="/">
-                        image here
-                    </a>
-                </div>
-                <p className={styles.name}>Graph Name</p>
+                <a href="/">
+                    <div className={styles.screenshotContainer}></div>
+                </a>
+                <p className={styles.name}>{name}</p>
                 <div class={styles.buttons}>
                     { del ? <DeleteButton onClick={() => onDeleteClick(id)} /> : <></> }
                     { edit ? <EditButton onClick={() => onEditClick(id)} />  : <></> }
