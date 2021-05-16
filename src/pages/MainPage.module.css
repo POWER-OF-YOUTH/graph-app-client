@@ -13,7 +13,8 @@
     grid-template-areas: "a b";
     justify-content: center;
     align-content: center;
-    height: 100vh;
+    padding-top: 40px;
+    height: calc(100vh - 40px);
 }
 
 .barLogo {
