@@ -40,7 +40,7 @@ function GraphsListElement({ name, id, del, edit, share, onDeleteClick, onEditCl
                     <div className={styles.screenshotContainer}></div>
                 </a>
                 <p className={styles.name}>{name}</p>
-                <div class={styles.buttons}>
+                <div className={styles.buttons}>
                     { del ? <DeleteButton onClick={() => onDeleteClick(id)} /> : <></> }
                     { edit ? <EditButton onClick={() => onEditClick(id)} />  : <></> }
                     { share ? <ShareButton onClick={() => onShareClick(id)} /> : <></> }

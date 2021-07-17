@@ -13,12 +13,18 @@ import TabPanel from '../components/TabPanel';
 import GraphsList from '../components/GraphsList';
 
 import styles from './GraphsListPage.module.css';
+import { useHistory } from 'react-router-dom';
 
 function GraphsListPage() {
-    const [value, setValue] = React.useState(0);
+    const history = useHistory();
+    if (localStorage.getItem("user") == null) { // TODO:
+        history.push("/");
+    }
+
+    const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setCurrentTabIndex(newValue);
     };
 
     // TODO: Delete this variables when API module complete.
@@ -88,14 +94,14 @@ function GraphsListPage() {
                 <a href="/" className={styles.barLogo}>Graph App</a>
             </AppBar>
             <main className={styles.content}>
-                <Tabs className={styles.menuTabs} value={value} onChange={handleChange} orientation="vertical" fixed>
+                <Tabs className={styles.menuTabs} value={currentTabIndex} onChange={handleChange} orientation="vertical" fixed>
                     <Tab label="Мои графы" icon={<AccountBoxIcon />} />
                     <Tab label="Приглашения" icon={<DraftsIcon />} />
                 </Tabs>
-                <TabPanel value={value} index={0}>
+                <TabPanel value={currentTabIndex} index={0}>
                     <GraphsList className={styles.graphsList} elements={myGraphs} onElementDeleteClick={id => {setMyGraphs(myGraphs.filter(e => e.id != id))}} addButton />
                 </TabPanel>
-                <TabPanel value={value} index={1}>
+                <TabPanel value={currentTabIndex} index={1}>
                     <GraphsList className={styles.graphsList} elements={invitedGraphs} />
                 </TabPanel>
             </main>
