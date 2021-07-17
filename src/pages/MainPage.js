@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 
 import AppBar from '@material-ui/core/AppBar';
 
@@ -7,6 +8,20 @@ import RegisterLoginForm from '../components/RegisterLoginForm';
 import styles from './MainPage.module.css';
 
 function MainPage() {
+    const history = useHistory();
+    if (localStorage.getItem("user") != null) {
+        history.push("/graphs");
+    }
+
+    const onRegisterSuccess = async (userData) => {
+        history.push("/graphs");
+    }
+
+    const onLoginSuccess = async (userData) =>  { 
+        localStorage.setItem("user", JSON.stringify(userData));
+        history.push("/graphs");
+    };
+
     return (
         <>
             <div className={styles.root}>
@@ -20,7 +35,7 @@ function MainPage() {
                             <b>Graph App</b> — интерактивный редактор графов, предназначенный для визуализации больших объёмов данных и исследования различных предметных областей.
                         </p>
                     </div>
-                    <RegisterLoginForm className={styles.form} />
+                    <RegisterLoginForm className={styles.form} onLoginSuccess={onLoginSuccess} onRegisterSuccess={onRegisterSuccess} />
                 </main>
             </div>
         </>
