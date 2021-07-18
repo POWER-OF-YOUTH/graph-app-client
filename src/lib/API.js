@@ -38,6 +38,10 @@ async function login(data) {
         return await response.json();
     else if (response.status === 401)
         throw new Error("Неправильный логин или пароль!");
+    else if (response.status === 500)
+        throw new Error("Server error!");
+    else 
+        throw new Error("Unexpected error!");
 }
 
 /**

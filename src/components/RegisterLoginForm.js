@@ -9,12 +9,26 @@ import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 
 import API from '../lib/API';
-import InvalidLoginOrPasswordError from '../lib/InvalidLoginOrPasswordError';
-import UnexpectedError from '../lib/UnexpectedError';
 
 import TabPanel from "./TabPanel";
 
 import styles from './RegisterLoginForm.module.css';
+
+const propTypes = {
+    className: PropTypes.string,
+    onLoginSuccess: PropTypes.func,
+    onLoginFailed: PropTypes.func,
+    onRegisterSuccess: PropTypes.func,
+    onRegisterFailed: PropTypes.func
+};
+
+const defaultProps = {
+    className: undefined,
+    onLoginSuccess: f => f,
+    onLoginFailed: f => f,
+    onRegisterSuccess: f => f,
+    onRegisterFailed: f => f
+}
 
 function Logo() {
     return (
@@ -32,7 +46,6 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
     const [registerAlertMessage, setRegisterAlertMessage] = React.useState("");
     const [showLoginAlert, setShowLoginAlert] = React.useState(false);
     const [loginAlertMessage, setLoginAlertMessage] = React.useState("");
-
     const [loginData, setLoginData] = React.useState({
         login: "",
         password: ""
@@ -47,7 +60,6 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
         patronymic: "",
         sex: "unknown"
     });
-
     const [currentTab, setCurrentTab] = React.useState(1);
 
     const clearStates = () => {
@@ -71,11 +83,10 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
 
     const handleTabChange = (evt, newValue) => {
         setCurrentTab(newValue);
-        
         clearStates();
     };
 
-    const handleRegisterChange = (evt) => {
+    const handleRegisterFieldChange = (evt) => {
         setShowRegisterAlert(false);
         const value = evt.target.value;
         setRegisterData({
@@ -84,7 +95,7 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
         });
     }
 
-    const handleLoginChange = (evt) => {
+    const handleLoginFieldChange = (evt) => {
         setShowLoginAlert(false);
         const value = evt.target.value;
         setLoginData({
@@ -93,7 +104,7 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
         });
     };
 
-    const registerClick = () => {
+    const handleRegisterClick = () => {
         API.register(registerData)
         .then(userData => {
             localStorage.setItem("user", JSON.stringify(userData));
@@ -109,7 +120,7 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
         })
     };
 
-    const loginClick = () => {
+    const handleLoginClick = () => {
         if (loginData.login === "" || loginData.password === "") {
             setLoginAlertMessage("Все поля должны быть заполненны!")
             setShowLoginAlert(true);
@@ -139,44 +150,31 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
                 </Tabs>
                 <TabPanel value={currentTab} index={0} className={styles.panelRegister}>
                     <div className={styles.registerFields}>
-                        <TextField className={styles.field} error={showRegisterAlert} name="email" onChange={handleRegisterChange} variant="filled" type="text" label="Email" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="login" onChange={handleRegisterChange} variant="filled" type="text" label="Логин" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="surname" onChange={handleRegisterChange}variant="filled" type="text" label="Фамилия" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="name" onChange={handleRegisterChange} variant="filled" type="text" label="Имя" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="patronymic" onChange={handleRegisterChange} variant="filled" type="text" label="Отчество" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="password" onChange={handleRegisterChange} variant="filled" type="password" label="Пароль" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="passwordRepeat" onChange={handleRegisterChange} variant="filled" type="password" label="Повтор пороля" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="email" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Email" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="login" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Логин" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="surname" onChange={handleRegisterFieldChange}variant="filled" type="text" label="Фамилия" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="name" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Имя" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="patronymic" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Отчество" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="password" onChange={handleRegisterFieldChange} variant="filled" type="password" label="Пароль" required />
+                        <TextField className={styles.field} error={showRegisterAlert} name="passwordRepeat" onChange={handleRegisterFieldChange} variant="filled" type="password" label="Повтор пороля" required />
                         { showRegisterAlert ? <Alert severity="error" variant="filled">{registerAlertMessage}</Alert> : <></> }
                     </div>
-                    <Button className={styles.registerButton} onClick={registerClick}>Зарегистрироваться</Button>
+                    <Button className={styles.registerButton} onClick={handleRegisterClick}>Зарегистрироваться</Button>
                 </TabPanel>
-                <TabPanel value={currentTab} index={1} className={styles.panelLogin} onC>
+                <TabPanel value={currentTab} index={1} className={styles.panelLogin}>
                     <div className={styles.loginFields}>
-                        <TextField className={styles.field} name="login" error={showLoginAlert} onChange={handleLoginChange} variant="filled" type="text" label="Логин" required />
-                        <TextField className={styles.field} name="password" error={showLoginAlert} onChange={handleLoginChange} variant="filled" type="password" label="Пароль" required />
+                        <TextField className={styles.field} name="login" error={showLoginAlert} onChange={handleLoginFieldChange} variant="filled" type="text" label="Логин" required />
+                        <TextField className={styles.field} name="password" error={showLoginAlert} onChange={handleLoginFieldChange} variant="filled" type="password" label="Пароль" required />
                         { showLoginAlert ? <Alert severity="error" variant="filled">{loginAlertMessage}</Alert> : <></> }
                     </div>
-                    <Button className={styles.loginButton} onClick={loginClick}>Войти</Button>
+                    <Button className={styles.loginButton} onClick={handleLoginClick}>Войти</Button>
                 </TabPanel>
             </div>
         </div>
     )
 }
 
-RegisterLoginForm.propTypes = {
-    className: PropTypes.string,
-    onLoginSuccess: PropTypes.func,
-    onLoginFailed: PropTypes.func,
-    onRegisterSuccess: PropTypes.func,
-    onRegisterFailed: PropTypes.func
-};
-
-RegisterLoginForm.defaultProps = {
-    className: undefined,
-    onLoginSuccess: f => f,
-    onLoginFailed: f => f,
-    onRegisterSuccess: f => f,
-    onRegisterFailed: f => f
-}
+RegisterLoginForm.propTypes = propTypes;
+RegisterLoginForm.defaultProps = defaultProps;
 
 export default RegisterLoginForm;

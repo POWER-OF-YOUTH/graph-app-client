@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route,  } from 'react-router-dom';
-import { useState } from 'react';
 
-import ErrorPage from './pages/ErrorPage';
+//import ErrorPage from './pages/ErrorPage';
 import MainPage from './pages/MainPage';
 import GraphsListPage from './pages/GraphsListPage';
 
