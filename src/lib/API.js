@@ -71,5 +71,9 @@ async function check() {
     return false;
 }
 
+async function getGraphs() {
+    
+}
+
 const API = { register, login, logout, check };
 export default API;
