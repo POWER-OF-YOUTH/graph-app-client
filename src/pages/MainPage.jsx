@@ -11,6 +11,7 @@ import useAuthorizedAsync from '../lib/useAuthorizedAsync';
 function MainPage() {
     const history = useHistory();
     const auth = useAuthorizedAsync();
+    
     if (!auth.isLoading && auth.isAuthorized) {
         history.push("/graphs");
     }   

@@ -4,7 +4,7 @@
  * @returns {Promise<{login: String, email: String, sex: String, name: String, surname: String, patronymic: String}>}
  */
 async function register(data) {
-    const response = await fetch("auth/register", {
+    const response = await fetch("/auth/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -27,7 +27,7 @@ async function register(data) {
  * @returns {Promise<void>}
  */
 async function login(data) {
-    const response = await fetch("auth/login", {
+    const response = await fetch("/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -51,7 +51,7 @@ async function login(data) {
  * @returns {Promise<void>}
  */
 async function logout() {
-    const response = await fetch("auth/logout", {
+    const response = await fetch("/auth/logout", {
         method: "POST",
         redirect: 'follow'
     });
@@ -63,7 +63,7 @@ async function logout() {
 }
 
 async function check() {
-    const response = await fetch("auth/check", {
+    const response = await fetch("/auth/check", {
         method: "GET",
         redirect: 'follow'
     });

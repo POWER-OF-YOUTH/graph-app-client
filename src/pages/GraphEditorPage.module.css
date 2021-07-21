@@ -1,0 +1,23 @@
+.root {
+    
+}
+
+.appBar {
+    height: 40px;
+}
+
+.barLogo {
+    text-decoration: none;
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 20px;
+}
+
+.content {
+    padding-top: 40px;
+    height: calc(100vh - 40px);
+}
