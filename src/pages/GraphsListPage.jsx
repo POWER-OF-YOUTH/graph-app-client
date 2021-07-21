@@ -13,11 +13,15 @@ import GraphsList from '../components/GraphsList';
 import styles from './GraphsListPage.module.css';
 import { useHistory } from 'react-router-dom';
 
+import useAuthorizedAsync from '../lib/useAuthorizedAsync';
+
 function GraphsListPage() {
     const history = useHistory();
-    if (localStorage.getItem("user") == null) { // TODO:
+    const auth = useAuthorizedAsync();
+    if (!auth.isLoading && !auth.isAuthorized) {
         history.push("/");
     }
+        
 
     const [currentTab, setCurrentTab] = React.useState(0);
     // TODO: Delete this variables when API module complete.

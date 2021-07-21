@@ -1,4 +1,5 @@
 import React from 'react';
+import validator from 'validator';
 
 import PropTypes from 'prop-types';
 
@@ -43,9 +44,23 @@ function Logo() {
 
 function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegisterSuccess, onRegisterFailed }) {
     const [showRegisterAlert, setShowRegisterAlert] = React.useState(false);
-    const [registerAlertMessage, setRegisterAlertMessage] = React.useState("");
+    const [registerAlertData, setRegisterAlertData] = React.useState({
+        login: false,
+        password: false,
+        passwordRepeat: false,
+        email: false,
+        name: false,
+        surname: false,
+        patronymic: false,
+        sex: false,
+        message: ""
+    });
     const [showLoginAlert, setShowLoginAlert] = React.useState(false);
-    const [loginAlertMessage, setLoginAlertMessage] = React.useState("");
+    const [loginAlertData, setLoginAlertData] = React.useState({
+        login: false,
+        password: false,
+        message: ""
+    });
     const [loginData, setLoginData] = React.useState({
         login: "",
         password: ""
@@ -65,10 +80,7 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
     const clearStates = () => {
         setShowLoginAlert(false);
         setShowRegisterAlert(false);
-        setLoginData({
-            login: "",
-            password: ""
-        });
+        setLoginData({login: "", password: ""});
         setRegisterData({
             login: "",
             password: "",
@@ -79,6 +91,18 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
             patronymic: "",
             sex: "unknown"
         });
+        setRegisterAlertData({
+            login: false,
+            password: false,
+            passwordRepeat: false,
+            email: false,
+            name: false,
+            surname: false,
+            patronymic: false,
+            sex: false,
+            message: ""
+        });
+        setLoginAlertData({login: false, password: false, message: ""});
     }
 
     const handleTabChange = (evt, newValue) => {
@@ -87,6 +111,17 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
     };
 
     const handleRegisterFieldChange = (evt) => {
+        setRegisterAlertData({
+            login: false,
+            password: false,
+            passwordRepeat: false,
+            email: false,
+            name: false,
+            surname: false,
+            patronymic: false,
+            sex: false,
+            message: ""
+        });
         setShowRegisterAlert(false);
         const value = evt.target.value;
         setRegisterData({
@@ -96,6 +131,11 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
     }
 
     const handleLoginFieldChange = (evt) => {
+        setLoginAlertData({
+            login: false,
+            password: false,
+            message: ""
+        })
         setShowLoginAlert(false);
         const value = evt.target.value;
         setLoginData({
@@ -104,40 +144,94 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
         });
     };
 
-    const handleRegisterClick = () => {
-        API.register(registerData)
-        .then(userData => {
-            localStorage.setItem("user", JSON.stringify(userData));
+    const validateRegisterData = () => {
+        const newRegisterAlertData = registerAlertData; 
+        let hasEmpty = false;
+        for (let key of Object.keys(registerData)) {
+            const isEmpty = validator.isEmpty(registerData[key]);
+            if (isEmpty) {
+                newRegisterAlertData[key] = true;
+                hasEmpty = true;
+            }
+        }
 
-            setShowRegisterAlert(false);
-            API.login({ login: registerData.login, password: registerData.password });
-            onRegisterSuccess(userData);
-        })
-        .catch(err => {
-            setRegisterAlertMessage(err.message);
+        if (hasEmpty) {
+            setRegisterAlertData({...newRegisterAlertData, message: "Все поля должны быть заполненны!"});
             setShowRegisterAlert(true);
-            onRegisterFailed(err);
-        })
+            return false;
+        }
+
+        if (!validator.isEmail(registerData.email)) {
+            setRegisterAlertData({...registerAlertData, email: true, message: "Укажите действительную почту!"});
+            setShowRegisterAlert(true);
+            return false;
+        }
+
+        if (!validator.equals(registerData.password, registerData.passwordRepeat)) {
+            setRegisterAlertData({...registerAlertData, password: true, passwordRepeat: true, message: "Пароли не совпадают!"});
+            setShowRegisterAlert(true);
+            return false;
+        }
+        return true;
+    };
+
+    const handleRegisterClick = () => {
+        if (validateRegisterData()) {
+            API.register(registerData)
+            .then(userData => {
+                localStorage.setItem("user", JSON.stringify(userData));
+                API.login({ login: registerData.login, password: registerData.password });
+                onRegisterSuccess(userData);
+            })
+            .catch(err => {
+                setRegisterAlertData({
+                    ...registerAlertData,
+                    message: err.message
+                });
+                setShowRegisterAlert(true);
+                onRegisterFailed(err);
+            });
+        }
+    };
+
+    const validateLoginData = () => {
+        const newLoginAlertData = loginAlertData; 
+        let hasEmpty = false;
+        for (let key of Object.keys(loginData)) {
+            const isEmpty = validator.isEmpty(loginData[key]);
+            if (isEmpty) {
+                newLoginAlertData[key] = true;
+                hasEmpty = true;
+            }
+        }
+        if (hasEmpty) {
+            setLoginAlertData({...newLoginAlertData, message: "Все поля должны быть заполненны!"});
+            setShowLoginAlert(true);
+            return false;
+        }
+
+        return true;
     };
 
     const handleLoginClick = () => {
-        if (loginData.login === "" || loginData.password === "") {
-            setLoginAlertMessage("Все поля должны быть заполненны!")
-            setShowLoginAlert(true);
-            return;
+        if (validateLoginData()) {
+            API.login(loginData)
+            .then(userData => {
+                localStorage.setItem("user", JSON.stringify(userData));
+                
+                setShowLoginAlert(false);
+                onLoginSuccess(userData);
+            })
+            .catch(err => {
+                setLoginAlertData({
+                    login: true,
+                    password: true,
+                    message: err.message
+                });
+                setShowLoginAlert(true);
+                onLoginFailed(err);
+            });
         }
-        API.login(loginData)
-        .then(userData => {
-            localStorage.setItem("user", JSON.stringify(userData));
-            
-            setShowLoginAlert(false);
-            onLoginSuccess(userData);
-        })
-        .catch(err => {
-            setLoginAlertMessage(err.message);
-            setShowLoginAlert(true);
-            onLoginFailed(err);
-        });
     };
 
     return (
@@ -150,22 +244,101 @@ function RegisterLoginForm({ className, onLoginSuccess, onLoginFailed, onRegiste
                 </Tabs>
                 <TabPanel value={currentTab} index={0} className={styles.panelRegister}>
                     <div className={styles.registerFields}>
-                        <TextField className={styles.field} error={showRegisterAlert} name="email" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Email" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="login" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Логин" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="surname" onChange={handleRegisterFieldChange}variant="filled" type="text" label="Фамилия" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="name" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Имя" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="patronymic" onChange={handleRegisterFieldChange} variant="filled" type="text" label="Отчество" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="password" onChange={handleRegisterFieldChange} variant="filled" type="password" label="Пароль" required />
-                        <TextField className={styles.field} error={showRegisterAlert} name="passwordRepeat" onChange={handleRegisterFieldChange} variant="filled" type="password" label="Повтор пороля" required />
-                        { showRegisterAlert ? <Alert severity="error" variant="filled">{registerAlertMessage}</Alert> : <></> }
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.email} 
+                            name="email" 
+                            onChange={handleRegisterFieldChange} 
+                            variant="filled" 
+                            type="text" 
+                            label="Email" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.login} 
+                            name="login" onChange={handleRegisterFieldChange} 
+                            variant="filled" 
+                            type="text" 
+                            label="Логин" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.surname} 
+                            name="surname" 
+                            onChange={handleRegisterFieldChange}
+                            variant="filled" 
+                            type="text" 
+                            label="Фамилия" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.name} 
+                            name="name" 
+                            onChange={handleRegisterFieldChange} 
+                            variant="filled" 
+                            type="text" 
+                            label="Имя" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.patronymic} 
+                            name="patronymic" 
+                            onChange={handleRegisterFieldChange} 
+                            variant="filled" 
+                            type="text" 
+                            label="Отчество" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.password} 
+                            name="password" 
+                            onChange={handleRegisterFieldChange} 
+                            variant="filled" 
+                            type="password" 
+                            label="Пароль" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            error={registerAlertData.passwordRepeat} 
+                            name="passwordRepeat" 
+                            onChange={handleRegisterFieldChange} 
+                            variant="filled" 
+                            type="password" 
+                            label="Повтор пороля" 
+                            required 
+                        />
+                        { showRegisterAlert ? <Alert severity="error" variant="filled">{registerAlertData.message}</Alert> : <></> }
                     </div>
                     <Button className={styles.registerButton} onClick={handleRegisterClick}>Зарегистрироваться</Button>
                 </TabPanel>
                 <TabPanel value={currentTab} index={1} className={styles.panelLogin}>
                     <div className={styles.loginFields}>
-                        <TextField className={styles.field} name="login" error={showLoginAlert} onChange={handleLoginFieldChange} variant="filled" type="text" label="Логин" required />
-                        <TextField className={styles.field} name="password" error={showLoginAlert} onChange={handleLoginFieldChange} variant="filled" type="password" label="Пароль" required />
-                        { showLoginAlert ? <Alert severity="error" variant="filled">{loginAlertMessage}</Alert> : <></> }
+                        <TextField 
+                            className={styles.field} 
+                            name="login" 
+                            error={loginAlertData.login} 
+                            onChange={handleLoginFieldChange} 
+                            variant="filled" 
+                            type="text" 
+                            label="Логин" 
+                            required 
+                        />
+                        <TextField 
+                            className={styles.field} 
+                            name="password" 
+                            error={loginAlertData.password} 
+                            onChange={handleLoginFieldChange} 
+                            variant="filled" 
+                            type="password" 
+                            label="Пароль" required 
+                        />
+                        { showLoginAlert ? <Alert severity="error" variant="filled">{loginAlertData.message}</Alert> : <></> }
                     </div>
                     <Button className={styles.loginButton} onClick={handleLoginClick}>Войти</Button>
                 </TabPanel>

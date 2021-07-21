@@ -9,15 +9,6 @@ import API from './lib/API';
 
 
 function App() {
-    React.useEffect(() => {
-        API.check().then(isAuthenticated => {
-            if (!isAuthenticated && localStorage.getItem("user") != null) {
-                const user = JSON.parse(localStorage.getItem("user"));
-                API.login({ login: user.login, password: user.password });
-            }
-        });
-    }, []);
-
     return (  
         <Router>
             <Switch>

@@ -15,6 +15,8 @@ async function register(data) {
     
     if(response.ok)
         return await response.json();
+    else if (response.status === 500)
+        throw new Error("Server error!");
     else
         throw new Error("Unexpected error!");
 }
@@ -72,7 +74,7 @@ async function check() {
 }
 
 async function getGraphs() {
-    
+
 }
 
 const API = { register, login, logout, check };
