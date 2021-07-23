@@ -1,3 +1,5 @@
+import io from 'socket.io-client';
+
 /**
  * 
  * @param {{login: String, password: String, email: String, sex: String, name: String, surname: String, patronymic: String}} data
@@ -77,5 +79,15 @@ async function getGraphs() {
 
 }
 
-const API = { register, login, logout, check };
+/**
+ * 
+ * @param {string} graphId 
+ */
+function socket() {
+    const socket = io(`/socket`);
+
+    return socket;
+}
+
+const API = { register, login, logout, check, socket };
 export default API;
